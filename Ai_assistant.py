@@ -4,6 +4,7 @@ import streamlit as st
 
 def get_bot_response(client, messages):
     # Generate response from the AI model
+    print(f"Generating response for following message: {messages}")
     response_placeholder = st.empty()
     completion = client.chat.completions.create(
         model="lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF",
@@ -13,7 +14,9 @@ def get_bot_response(client, messages):
     )
     new_message = {"role": "assistant", "content": ""}
     for chunk in completion:
+        #print(f"Length of choices: {len(chunk.choices)}")
         if chunk.choices[0].delta.content:
             new_message["content"] += chunk.choices[0].delta.content
+            print(chunk.choices[0].delta.content, end="")
             response_placeholder.markdown(new_message["content"])
     return new_message["content"]

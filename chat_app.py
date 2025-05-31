@@ -57,7 +57,9 @@ def login():
                 st.session_state.show_login = False
                 st.session_state.show_register = False
                 st.success("Login successful!")
+                print(f"User {user.username} logged in successfully!")
             else:
+                print(f"User {username} failed to login")
                 st.error("Invalid username or password")
 
 
